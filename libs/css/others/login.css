@@ -1,0 +1,63 @@
+#login {
+	width: 270px;
+	background: #c8c8c8;
+	border: 1px solid white;
+	/*margin: 200px auto 0;*/
+	margin: auto;
+	padding: 1em;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+h1, h2, h3, h4, h5 {
+	margin-top: 0;
+	font-family: Arial black, arial;
+	text-align: center;
+}
+
+h1 {
+	text-shadow: 0 1px 0 white;
+}
+
+input[id=login_user], input[id=login_pass] {
+	display: block;
+	margin: 0 0 1em 0;
+	width: 240px;
+	border: 5px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	padding: 1em;
+}
+
+input[id=login_submit], form a {
+	border: none;
+	margin-right: 1em;
+	padding: 6px;
+	text-decoration: none;
+	font-size: 12px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background: #348075;
+	color: white;
+	box-shadow: 0 1px 0 white;
+	-moz-box-shadow: 0 1px 0 white;
+	-webkit-box-shadow: 0 1px 0 white;
+}
+
+input[id=login_submit]:hover, form a:hover {
+	background: #287368;
+	cursor: pointer;
+}
+
+.error {
+	color: #393939;
+	font-size: 15px;
+}
+
+fieldset {
+	width: 300px;
+	height: 220px;
+	margin: 180px auto 0;
+	margin-bottom: 2em;
+	display: block;
+}
