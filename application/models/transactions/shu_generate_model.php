@@ -62,8 +62,7 @@ class Shu_generate_model extends CI_Model {
 						  , (count(1) * $nominal) shu_qty
 						from users u
 						  , stocks s
-						where u.is_active = 1 
-						  and s.stockholder_id = u.id
+						where s.stockholder_id = u.id
 						  and s.buy_date <= str_to_date('$last_buy_date 23:59:59', '%d %b %Y %H:%i:%s')
 						  and s.is_active = 1
 						group by u.id
