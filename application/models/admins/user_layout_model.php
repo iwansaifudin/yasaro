@@ -5,14 +5,32 @@ class User_layout_model extends CI_Model {
 			
 		$key = (isset($_REQUEST['key'])?$_REQUEST['key']:'null');
 		write_log($this, __METHOD__, "key : $key");
+		
+		$where = "";
+		$keys = explode(" ", trim($key));
+		for($i = 0;  $i < sizeof($keys); $i++) {
+			
+			if($i == 0) {
+				$where = " where ";
+			} else {
+				$where .= " and ";
+			}
+			
+			$where .= "concat(name, cluster, address) like '%".$keys[$i]."%'";
+
+		}
 
 		$sql = "
-				select u.id, u.code, u.name, c.name cluster, u.address
-				from users u
-					, clusters c
-				where (u.code like '%$key%' or u.name like '%$key%' or c.name like '%$key%')
-					and c.id = u.cluster
-				order by u.name
+				select id, name, cluster, address
+				from (
+				    select u.id, u.name, c.name cluster
+				      , concat(u.address1, ' ', u.address2) address
+				    from users u
+				      , clusters c
+				    where c.id = u.cluster
+				  ) a
+				$where
+				order by name
 				limit 100
 			";
 		write_log($this, __METHOD__, "sql : $sql");

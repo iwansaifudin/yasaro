@@ -23,7 +23,7 @@ class User_model extends CI_Model {
 				select id, name
 				from families
 				where is_active = 1
-				order by name
+				order by id
 			";
 		write_log($this, __METHOD__, "sql : $sql");
 		$query = $this->db->query($sql);
@@ -42,9 +42,10 @@ class User_model extends CI_Model {
 				select u.id, u.code, u.name
 				  , u.birth_place, date_format(u.birth_date, '%e %b %Y') birth_date
 				  , date_format(from_days(to_days(now()) - to_days(u.birth_date)), '%Y') + 0 age, u.gender
-				  , u.address, u.rt, u.rw, u.village, u.sub_district, u.municipality, u.telephone
+				  , u.address1, u.address2, u.telephone, u.handphone
 				  , u.patriarch patriarch_id, (select name from users where id = u.patriarch) patriarch_name
-				  , u.family, u.cluster, u.stock_qty, u.stock_total_price, u.is_active status
+				  , u.family, u.cluster, u.nationality
+				  , u.stock_qty, u.stock_total_price, u.is_active status, u.information
 				from users u
 				where u.id = '$id' 
 			";
@@ -71,21 +72,21 @@ class User_model extends CI_Model {
 		$status = (isset($_REQUEST['status'])?$_REQUEST['status']:null);
 		$birth_place = (isset($_REQUEST['birth_place'])?$_REQUEST['birth_place']:null);
 		$birth_date = (isset($_REQUEST['birth_date'])?$_REQUEST['birth_date']:null);
+		$birth_date = (($birth_date==null||$birth_date='')?"str_to_date(null, '%e %b %Y')":"str_to_date('$birth_date', '%e %b %Y')");
 		$gender = (isset($_REQUEST['gender'])?$_REQUEST['gender']:null);
-		$address = (isset($_REQUEST['address'])?$_REQUEST['address']:null);
-		$rt = (isset($_REQUEST['rt'])?$_REQUEST['rt']:null);
-		$rw = (isset($_REQUEST['rw'])?$_REQUEST['rw']:null);
-		$village = (isset($_REQUEST['village'])?$_REQUEST['village']:null);
-		$sub_district = (isset($_REQUEST['sub_district'])?$_REQUEST['sub_district']:null);
-		$municipality = (isset($_REQUEST['municipality'])?$_REQUEST['municipality']:null);
+		$address1 = (isset($_REQUEST['address1'])?$_REQUEST['address1']:null);
+		$address2 = (isset($_REQUEST['address2'])?$_REQUEST['address2']:null);
 		$telephone = (isset($_REQUEST['telephone'])?$_REQUEST['telephone']:null);
+		$handphone = (isset($_REQUEST['handphone'])?$_REQUEST['handphone']:null);
 		$patriarch = (isset($_REQUEST['patriarch'])?$_REQUEST['patriarch']:null);
 		$family = (isset($_REQUEST['family'])?$_REQUEST['family']:0);
 		$cluster = (isset($_REQUEST['cluster'])?$_REQUEST['cluster']:0);
+		$nationality = (isset($_REQUEST['nationality'])?$_REQUEST['nationality']:0);
+		$information = (isset($_REQUEST['information'])?$_REQUEST['information']:null);
 		write_log($this, __METHOD__, "
 			id : $id | code : $code | name : $name | status : $status | birth_place : $birth_place | birth_date : $birth_date 
-			| gender : $gender | address : $address | rt : $rt | rw : $rw | village : $village | sub_district : $sub_district 
-			| municipality : $municipality | telephone : $telephone | patriarch : $patriarch | family : $family | cluster : $cluster
+			| gender : $gender | address1 : $address1 | address2 : $address2 
+			| telephone : $telephone | patriarch : $patriarch | family : $family | cluster : $cluster | nationality : $nationality | information : $information
 		");
 
 		$sql = "
@@ -113,14 +114,14 @@ class User_model extends CI_Model {
 					insert into users(
 						id, code, name, is_active
 						, birth_place, birth_date, gender
-						, address, rt, rw, village, sub_district, municipality
-						, telephone, patriarch, family, cluster
+						, address1, address2, telephone, handphone
+						, patriarch, family, cluster, nationality, information
 						, created_by, created_date, changed_by, changed_date
 					) values(
 						'$id', '$code', '$name', '$status'
-						, '$birth_place', str_to_date('$birth_date', '%e %b %Y'), '$gender'
-						, '$address', '$rt', '$rw', '$village', '$sub_district', '$municipality'
-						, '$telephone', '$patriarch', '$family', '$cluster'
+						, '$birth_place', $birth_date, '$gender'
+						, '$address1', '$address2', '$telephone', '$handphone'
+						, '$patriarch', '$family', '$cluster', '$nationality', '$information'
 						, '$user_id', now(), '$user_id', now()
 					)
 				";
@@ -130,16 +131,16 @@ class User_model extends CI_Model {
 			$sql = "
 					update users
 					set code = '$code', name = '$name', is_active = '$status'
-						, birth_place = '$birth_place', birth_date = str_to_date('$birth_date', '%e %b %Y')
+						, birth_place = '$birth_place', birth_date = $birth_date
 						, gender = '$gender'
-						, address = '$address', rt = '$rt', rw = '$rw', village = '$village'
-						, sub_district = '$sub_district', municipality = '$municipality'
-						, telephone = '$telephone', patriarch = '$patriarch', family = '$family'
-						, cluster = '$cluster'
+						, address1 = '$address1', address2 = '$address2'
+						, telephone = '$telephone', handphone = '$handphone'
+						, patriarch = '$patriarch', family = '$family'
+						, cluster = '$cluster', nationality = '$nationality', information = '$information'
 						, changed_by = '$user_id', changed_date = now()
 					where id = '$id'
 				";
-
+				
 		}
 		write_log($this, __METHOD__, "sql : $sql");
 		$result = $this->db->query($sql);

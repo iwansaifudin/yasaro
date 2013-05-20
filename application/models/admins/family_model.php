@@ -8,8 +8,9 @@ class Family_model extends CI_Model {
 		$id = (isset($_REQUEST['id'])?$_REQUEST['id']:0);
 		$name = (isset($_REQUEST['name'])?$_REQUEST['name']:null);
 		$status = (isset($_REQUEST['status'])?$_REQUEST['status']:null);
+		$is_parent = (isset($_REQUEST['is_parent'])?$_REQUEST['is_parent']:0);
 		$oper = (isset($_REQUEST['oper'])?$_REQUEST['oper']:null);
-		write_log($this, __METHOD__, "id : $id | name : $name | status : $status | oper : $oper");
+		write_log($this, __METHOD__, "id : $id | name : $name | status : $status | is_parent : $is_parent | oper : $oper");
 		
 		if($oper == 'add') { // insert data
 
@@ -40,10 +41,10 @@ class Family_model extends CI_Model {
 	
 				$sql = "
 						insert into families(
-							id, name, is_active
+							id, name, is_active, is_parent
 							, created_by, created_date, changed_by, changed_date
 						) values (
-							$id, '$name', $status
+							$id, '$name', $status, $is_parent
 							, '$user_id', sysdate(), '$user_id', sysdate()
 						)
 					";
@@ -52,7 +53,7 @@ class Family_model extends CI_Model {
 
 				$sql = "
 						update families
-						set name = '$name', is_active = $status
+						set name = '$name', is_active = $status, is_parent = $is_parent
 							, created_by = '$user_id', created_date = sysdate()
 							, changed_by = '$user_id', changed_date = sysdate()
 						where id = '$id'
@@ -64,7 +65,7 @@ class Family_model extends CI_Model {
 
 			$sql = "
 					update families
-					set name = '$name', is_active = $status
+					set name = '$name', is_active = $status, is_parent = $is_parent
 						, changed_by = '$user_id', changed_date = sysdate()
 					where id = '$id'
 				";
