@@ -22,6 +22,7 @@ var rpt_stock_trans = function () {
 
 			jQuery("#list_3").jqGrid({
 				datatype: "local"
+				, width: 800
 				, height: 250
 				, colNames:[
 					'ID', 'Form', 'No. Ref', 'Tanggal', 'User'
@@ -31,23 +32,23 @@ var rpt_stock_trans = function () {
 					, 'Keterangan'
 				]
 				, colModel:[
-					{name:'id',index:'id', width:60, sorttype:"int", align:'center'}
-					, {name:'form_name',index:'form_name', width:120}
-					, {name:'ref_no',index:'ref_no', width:110}
-					, {name:'trans_date',index:'trans_date', width:130, align:'center'}
-					, {name:'user_name',index:'user_name', width:100}
-					, {name:'qty',index:'qty', width:65, align:'right'}
-					, {name:'total_price',index:'total_price', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'list_stock',index:'list_stock', width:200}
-					, {name:'stockholder_name_from',index:'stockholder_name_from', width:120}
-					, {name:'stockholder_cluster_from',index:'stockholder_cluster_from', width:160}
-					, {name:'qty_from_before',index:'qty_from_before', width:65, align:'right'}
-					, {name:'qty_from_after',index:'qty_from_after', width:65, align:'right'}
-					, {name:'stockholder_name_to',index:'stockholder_name_to', width:120}
-					, {name:'stockholder_cluster_to',index:'stockholder_cluster_to', width:160}
-					, {name:'qty_to_before',index:'qty_to_before', width:65, align:'right'}
-					, {name:'qty_to_after',index:'qty_to_after', width:65, align:'right'}
-					, {name:'message',index:'message', width:200}
+					{name:'id',index:'id', width:60, sorttype:"int", align:'center', fixed: true}
+					, {name:'form_name',index:'form_name', width:120, fixed: true}
+					, {name:'ref_no',index:'ref_no', width:110, fixed: true}
+					, {name:'trans_date',index:'trans_date', width:130, align:'center', fixed: true}
+					, {name:'user_name',index:'user_name', width:100, fixed: true}
+					, {name:'qty',index:'qty', width:65, align:'right', fixed: true}
+					, {name:'total_price',index:'total_price', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'list_stock',index:'list_stock', width:200, fixed: true}
+					, {name:'stockholder_name_from',index:'stockholder_name_from', width:120, fixed: true}
+					, {name:'stockholder_cluster_from',index:'stockholder_cluster_from', width:160, fixed: true}
+					, {name:'qty_from_before',index:'qty_from_before', width:65, align:'right', fixed: true}
+					, {name:'qty_from_after',index:'qty_from_after', width:65, align:'right', fixed: true}
+					, {name:'stockholder_name_to',index:'stockholder_name_to', width:120, fixed: true}
+					, {name:'stockholder_cluster_to',index:'stockholder_cluster_to', width:160, fixed: true}
+					, {name:'qty_to_before',index:'qty_to_before', width:65, align:'right', fixed: true}
+					, {name:'qty_to_after',index:'qty_to_after', width:65, align:'right', fixed: true}
+					, {name:'message',index:'message', width:200, fixed: true}
 				]
 				, loadComplete: function() {
 				}

@@ -52,9 +52,9 @@
 			}
 			, colNames:['ID', 'Nama', 'Harga']
 			, colModel:[
-				{name:'id', index:'id', width:30, align:'left', sorttype:'text'}
-				, {name:'name', index:'name', width:180, align:'left', sorttype:'text'}
-				, {name:'price', index:'price', width:70, align:'left', sorttype:'text'}
+				{name:'id', index:'id', width:80, align:'left', sorttype:'text'}
+				, {name:'name', index:'name', width:150, align:'left', sorttype:'text'}
+				, {name:'price', index:'price', width:100, align:'left', sorttype:'text'}
 			]
 			, sortname: 'id'
 			, sortorder: 'asc'

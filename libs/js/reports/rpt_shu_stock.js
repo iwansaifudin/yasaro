@@ -12,6 +12,7 @@ var rpt_shu_stock = function () {
 			
 			jQuery("#list_3").jqGrid({
 				datatype: "local"
+				, width: 800
 				, height: 250
 				, colNames:[
 					'ID', 'Periode', 'Nominal', 'Pemegang Saham', 'Kelompok'
@@ -20,19 +21,19 @@ var rpt_shu_stock = function () {
 					, 'Daftar Shm diterima', 'Daftar Sisa Shm'
 				]
 				, colModel:[
-					{name:'id',index:'id', width:40, sorttype:"int", align:'right'}
-					, {name:'period',index:'period', width:50, align:'center'}
-					, {name:'nominal',index:'nominal', width:70, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'stockholder',index:'stockholder', width:100}
-					, {name:'cluster',index:'cluster', width:120}
-					, {name:'stock_qty',index:'stock_qty', width:65, align:'right'}
-					, {name:'stock_received',index:'stock_received', width:65, align:'right'}
-					, {name:'stock_remain',index:'stock_remain', width:65, align:'right'}
-					, {name:'shu_qty',index:'shu_qty', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'shu_received',index:'shu_received', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'shu_remain',index:'shu_remain', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'list_stock_received',index:'list_stock_received', width:200}
-					, {name:'list_stock_remain',index:'list_stock_remain', width:200}
+					{name:'id',index:'id', width:40, sorttype:"int", align:'right', fixed: true}
+					, {name:'period',index:'period', width:50, align:'center', fixed: true}
+					, {name:'nominal',index:'nominal', width:70, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'stockholder',index:'stockholder', width:100, fixed: true}
+					, {name:'cluster',index:'cluster', width:120, fixed: true}
+					, {name:'stock_qty',index:'stock_qty', width:65, align:'right', fixed: true}
+					, {name:'stock_received',index:'stock_received', width:65, align:'right', fixed: true}
+					, {name:'stock_remain',index:'stock_remain', width:65, align:'right', fixed: true}
+					, {name:'shu_qty',index:'shu_qty', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'shu_received',index:'shu_received', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'shu_remain',index:'shu_remain', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'list_stock_received',index:'list_stock_received', width:200, fixed: true}
+					, {name:'list_stock_remain',index:'list_stock_remain', width:200, fixed: true}
 				]
 				, loadComplete: function() {
 				}

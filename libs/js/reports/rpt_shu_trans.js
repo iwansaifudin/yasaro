@@ -22,6 +22,7 @@ var rpt_shu_trans = function () {
 
 			jQuery("#list_3").jqGrid({
 				datatype: "local"
+				, width: 800
 				, height: 250
 				, colNames:[
 					'ID', 'Form', 'No. Ref', 'Tanggal', 'Pemegang Saham'
@@ -31,22 +32,22 @@ var rpt_shu_trans = function () {
 					, 'Daftar Saham', 'Keterangan'
 				]
 				, colModel:[
-					{name:'id',index:'id', width:60, sorttype:"int", align:'center'}
-					, {name:'form',index:'form', width:120}
-					, {name:'ref_no',index:'ref_no', width:110}
-					, {name:'trans_date',index:'trans_date', width:130, align:'center'}
-					, {name:'stockholder',index:'stockholder', width:100}
-					, {name:'period',index:'period', width:65, align:'right'}
-					, {name:'nominal',index:'nominal', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'stock_qty',index:'stock_qty', width:65, align:'right'}
-					, {name:'stock_trans',index:'stock_trans', width:65, align:'right'}
-					, {name:'stock_before',index:'stock_before', width:65, align:'right'}
-					, {name:'stock_after',index:'stock_after', width:65, align:'right'}
-					, {name:'shu_qty',index:'shu_qty', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'shu_trans',index:'shu_trans', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'shu_before',index:'shu_before', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'shu_after',index:'shu_after', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}}
-					, {name:'list_stock',index:'list_stock', width:200}					, {name:'message',index:'message', width:200}
+					{name:'id',index:'id', width:60, sorttype:"int", align:'center', fixed: true}
+					, {name:'form',index:'form', width:120, fixed: true}
+					, {name:'ref_no',index:'ref_no', width:110, fixed: true}
+					, {name:'trans_date',index:'trans_date', width:130, align:'center', fixed: true}
+					, {name:'stockholder',index:'stockholder', width:100, fixed: true}
+					, {name:'period',index:'period', width:65, align:'right', fixed: true}
+					, {name:'nominal',index:'nominal', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'stock_qty',index:'stock_qty', width:65, align:'right', fixed: true}
+					, {name:'stock_trans',index:'stock_trans', width:65, align:'right', fixed: true}
+					, {name:'stock_before',index:'stock_before', width:65, align:'right', fixed: true}
+					, {name:'stock_after',index:'stock_after', width:65, align:'right', fixed: true}
+					, {name:'shu_qty',index:'shu_qty', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'shu_trans',index:'shu_trans', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'shu_before',index:'shu_before', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'shu_after',index:'shu_after', width:80, align:'right', formatter:'currency', formatoptions: {prefix:'Rp. ', suffix:'', thousandsSeparator:'.', decimalSeparator:',', decimalPlaces:0}, fixed: true}
+					, {name:'list_stock',index:'list_stock', width:200, fixed: true}					, {name:'message',index:'message', width:200, fixed: true}
 				]
 				, loadComplete: function() {
 				}

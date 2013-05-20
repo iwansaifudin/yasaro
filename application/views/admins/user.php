@@ -13,26 +13,25 @@
 	$birth_date = (isset($form['birth_date'])?$form['birth_date']:null);
 	$age = (isset($form['age'])?$form['age']:0);
 	$gender = (isset($form['gender'])?$form['gender']:'M');
-	$address = (isset($form['address'])?$form['address']:null);
-	$rt = (isset($form['rt'])?$form['rt']:null);
-	$rw = (isset($form['rw'])?$form['rw']:null);
-	$village = (isset($form['village'])?$form['village']:null);
-	$sub_district = (isset($form['sub_district'])?$form['sub_district']:null);
-	$municipality = (isset($form['municipality'])?$form['municipality']:null);
+	$address1 = (isset($form['address1'])?$form['address1']:null);
+	$address2 = (isset($form['address2'])?$form['address2']:null);
 	$telephone = (isset($form['telephone'])?$form['telephone']:null);
+	$handphone = (isset($form['handphone'])?$form['handphone']:null);
 	$patriarch_id = (isset($form['patriarch_id'])?$form['patriarch_id']:null);
 	$patriarch_name = (isset($form['patriarch_name'])?$form['patriarch_name']:null);
 	$family = (isset($form['family'])?$form['family']:null);
 	$cluster = (isset($form['cluster'])?$form['cluster']:null);
+	$nationality = (isset($form['nationality'])?$form['nationality']:0);
 	$stock_qty = (isset($form['stock_qty'])?$form['stock_qty']:0);
 	$stock_total_price = (isset($form['stock_total_price'])?$form['stock_total_price']:0);
+	$information = (isset($form['information'])?$form['information']:null);
 	
 ?>
 
 	<div style="height:670px; overflow:hidden; position:relative; width:99.9%;">
 	<div style="height:570px; width:700px; border: 1px solid darkgray; background-color: white; position:relative; top:25px; text-align:left; margin-left:auto; margin-right:auto;">
 
-		<h1>PENDAFTARAN JAMAAH</h1>
+		<h1>PENDAFTARAN ANGGOTA</h1>
 		<table border='0' cellspacing='15' cellpadding='0' width="100%"><tr><td>
 			<table border="0" cellspacing="3" cellpadding="3" width="100%">
 				<tr>
@@ -66,17 +65,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>4. Status Keanggotaan</td>
-					<td>:</td>
-					<td>
-						<select id='status' style="border: none; font-size: 110%">
-							<option value='1' <?=($status==1?'selected':'')?>>Aktif</option>
-							<option value='0' <?=($status==0?'selected':'')?>>Tidak Aktif</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>5. Tempat, Tanggal Lahir</td>
+					<td>4. Tempat, Tanggal Lahir</td>
 					<td>:</td>
 					<td>
 						<input type="text" id="birth_place" style="border: none; font-size: 110%; width: 150px" maxlength="20"  
@@ -84,13 +73,13 @@
 						/>, 
 						&nbsp;
 						<input type="text" id="birth_date" style="border: none; font-size: 110%; width: 75px" maxlength="20" readonly
-							value="<?=($birth_date<>null?$birth_date:'')?>" 
+							value="<?=($birth_date<>null?$birth_date:'')?>" placeholder="<?=$blank1;?>" 
 						/>
 						(<font id="age"><?=$age?></font> tahun)
 					</td>
 				</tr>
 				<tr>
-					<td>6. Jenis Kelamin</td>
+					<td>5. Jenis Kelamin</td>
 					<td>:</td>
 					<td> 
 						<select id='gender' style="border: none; font-size: 110%">
@@ -99,12 +88,12 @@
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td>7. Alamat</td>
+				<tr valign="top">
+					<td>6. Alamat</td>
 					<td>:</td>
 					<td>
-						<input type="text" id="address" style="border: none; font-size: 110%; width: 350px" maxlength="80" 
-							value="<?=($address<>null?$address:'')?>" placeholder="<?=$blank1;?>" 
+						<input type="text" id="address1" style="border: none; font-size: 110%; width: 350px" maxlength="80" 
+							value="<?=($address1<>null?$address1:'')?>" placeholder="<?=$blank1;?>" 
 						/>
 					</td>
 				</tr>
@@ -112,61 +101,27 @@
 					<td></td>
 					<td></td>
 					<td>
-						RT. 
-						<input type="text" id="rt" style="border: none; font-size: 110%; width: 35px" maxlength="5" 
-							value="<?=($rt<>null?$rt:'')?>" placeholder="<?=$blank1;?>" 
-							onkeypress="character = false; metachar = false; allowed_character();"
-						/> 
-						&nbsp; &nbsp;
-						RW. 
-						<input type="text" id="rw" style="border: none; font-size: 110%; width: 35px" maxlength="5" 
-							value="<?=($rw<>null?$rw:'')?>" placeholder="<?=$blank1;?>" 
-							onkeypress="character = false; metachar = false; allowed_character();"
-						/> 
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>
-						Kelurahan 
-						<input type="text" id="village" style="border: none; font-size: 110%; width: 120px" maxlength="20" 
-							value="<?=($village<>null?$village:'')?>" placeholder="<?=$blank1;?>" 
+						<input type="text" id="address2" style="border: none; font-size: 110%; width: 350px" maxlength="80" 
+							value="<?=($address2<>null?$address2:'')?>" placeholder="<?=$blank1;?>" 
 						/>
 					</td>
 				</tr>
 				<tr>
-					<td></td>
-					<td></td>
-					<td>
-						Kecamatan 
-						<input type="text" id="sub_district" style="border: none; font-size: 110%; width: 120px" maxlength="20" 
-							value="<?=($sub_district<>null?$sub_district:'')?>" placeholder="<?=$blank1;?>" 
-						/>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>
-						Kotamadya 
-						<input type="text" id="municipality" style="border: none; font-size: 110%; width: 120px" maxlength="20" 
-							value="<?=($municipality<>null?$municipality:'')?>" placeholder="<?=$blank1;?>" 
-						/>
-					</td>
-				</tr>
-				<tr>
-					<td>8. Nomor Telepon</td>
+					<td>7. Telepon</td>
 					<td>:</td>
 					<td>
 						<input type="text" id="telephone" style="border: none; font-size: 110%; width: 120px" maxlength="20" 
 							value="<?=($telephone<>null?$telephone:'')?>" placeholder="<?=$blank1;?>" 
-							onkeypress="character = false; metachar = false; allowed_character();"
+						/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						Handphone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="text" id="handphone" style="border: none; font-size: 110%; width: 120px" maxlength="20" 
+							value="<?=($handphone<>null?$handphone:'')?>" placeholder="<?=$blank1;?>" 
 						/>
 					</td>
 				</tr>
 				<tr>
-					<td>9. Nama Kepala Keluarga</td>
+					<td>8. Nama Kepala Keluarga</td>
 					<td>:</td>
 					<td>
 						<input type="hidden"" id="patriarch_id" style="border: none; font-size: 110%; width: 120px;"
@@ -179,7 +134,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>10. Status dalam Keluarga</td>
+					<td>9. Status dalam Keluarga</td>
 					<td>:</td>
 					<td>
 						<select id='family' style="border: none; font-size: 110%">
@@ -194,7 +149,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>11. Kelompok</td>
+					<td>10. Kelompok</td>
 					<td>:</td>
 					<td>
 						<select id='cluster' style="border: none; font-size: 110%">
@@ -209,10 +164,40 @@
 					</td>
 				</tr>
 				<tr>
+					<td>11. Kewarganegaraan</td>
+					<td>:</td>
+					<td> 
+						<select id='nationality' style="border: none; font-size: 110%">
+							<option value='1' <?=($nationality=='1'?'selected':'')?>>Indonesia</option>
+							<option value='2' <?=($nationality=='2'?'selected':'')?>>Asing</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td>12. Jumlah Saham</td>
 					<td>:</td>
 					<td>
 						<font style="font-size: 110%;"><?=$stock_qty?></font> pcs&nbsp;&nbsp;&nbsp;(Rp. <font style="font-size: 110%;"><?=$stock_total_price?></font>)
+					</td>
+				</tr>
+				
+				<tr>
+					<td>13. Status Keanggotaan</td>
+					<td>:</td>
+					<td>
+						<select id='status' style="border: none; font-size: 110%">
+							<option value='1' <?=($status==1?'selected':'')?>>Aktif</option>
+							<option value='0' <?=($status==0?'selected':'')?>>Tidak Aktif</option>
+						</select>
+					</td>
+				</tr>
+				<tr valign="top">
+					<td>14. Keterangan</td>
+					<td>:</td>
+					<td>
+						<input type="text" id="information" style="border: none; font-size: 110%; width: 350px" maxlength="80" 
+							value="<?=($information<>null?$information:'')?>" placeholder="<?=$blank1;?>" 
+						/>
 					</td>
 				</tr>
 			</table>

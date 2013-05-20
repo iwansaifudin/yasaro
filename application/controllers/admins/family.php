@@ -15,7 +15,9 @@ class Family extends CI_Controller {
 		
 		// get profile grid
 		$sql = "
-				select id, name, is_active status 
+				select id, name
+					, is_active status
+					, is_parent 
 				from families
 				where is_active >= 0
 			";
@@ -28,7 +30,7 @@ class Family extends CI_Controller {
 		foreach ($data as $row) {
 
 			$response->rows[$i]['id'] = $row['id']; 
-			$response->rows[$i]['cell'] = array(null,$row['id'],$row['name'],$row['status']);
+			$response->rows[$i]['cell'] = array(null,$row['id'],$row['name'],$row['status'],$row['is_parent']);
 
             $i++;
 		}

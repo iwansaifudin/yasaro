@@ -26,9 +26,11 @@ class Rpt_user_model extends CI_Model {
 		$sql = "
 				select u1.id, u1.name, u1.birth_place, date_format(u1.birth_date, '%d %b %Y') birth_date
 				  , if(u1.gender = 'M', 'Laki-Laki', 'Perempuan') gender
-				  , concat(u1.address, ' Rt.', u1.rt, ' Rw.', u1.rw, ' ', u1.village, ' ', u1.sub_district, ' ', u1.municipality) address
-				  , u1.telephone, u2.name patriarch, f.name family, c.name cluster, u1.stock_qty, u1.stock_total_price
-				  , list_stock_stockholder(u1.id) list_stock
+				  , concat(u1.address1, ' ', u1.address2) address
+				  , u1.telephone, u1.handphone, u2.name patriarch, f.name family, c.name cluster
+				  , if(u1.nationality = 1, 'Indonesia', 'Asing') nationality
+				  , u1.stock_qty, u1.stock_total_price, list_stock_stockholder(u1.id) list_stock
+				  , if(u1.is_active = 1, 'Aktif', 'Tidak Aktif') status, u1.information
 				from users u1
 				  , users u2
 				  , families f
@@ -83,11 +85,13 @@ class Rpt_user_model extends CI_Model {
 
 		// table header 
 		$cols = array(
-			'ID', 'Nama', 'Tempat Lahir', 'Tanggal Lahir', 'Jenis Kelamin', 'Alamat', 'Telepon'
-			, 'Kepala Keluarga', 'Status dlm Keluarga', 'Kelompok', 'Jml Saham', 'Total Harga', 'Daftar Saham');
+			'ID', 'Nama', 'Tempat Lahir', 'Tanggal Lahir', 'Jenis Kelamin', 'Alamat', 'Telepon', 'Handphone'
+			, 'Kepala Keluarga', 'Status dlm Keluarga', 'Kelompok', 'Kewarganegaraan'
+			, 'Jml Saham', 'Total Harga', 'Daftar Saham', 'Status Keanggotaan', 'Keterangan');
 		$cols_flag = array(
-			'Total', 'count', '', '', '', '', ''
-			, '', '', '', 'sum', 'sum', '');
+			'Total', 'count', '', '', '', '', '', ''
+			, '', '', '', ''
+			, 'sum', 'sum', '', '', '');
 		$total = array();
 		$col = 'A';
 		$row = 6;

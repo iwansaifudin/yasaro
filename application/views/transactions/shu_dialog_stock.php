@@ -51,7 +51,7 @@
 			    , form_id: function() { return $('#form_id_act').val(); }			}
 			, colNames:['ID', 'Nama']
 			, colModel:[
-				{name:'id', index:'id', width:35, align:'left', sorttype:'text'}
+				{name:'id', index:'id', width:50, align:'left', sorttype:'text'}
 				, {name:'name', index:'name', width:150, align:'left', sorttype:'text'}
 			]
 			, sortname: 'id'

@@ -6,19 +6,33 @@ class Stock_layout_model extends CI_Model {
 		$key = (isset($_REQUEST['key'])?$_REQUEST['key']:'null');
 		write_log($this, __METHOD__, "key : $key");
 
+		$where = "";
+		$keys = explode(" ", trim($key));
+		for($i = 0;  $i < sizeof($keys); $i++) {
+			
+			if($i == 0) {
+				$where = " where ";
+			} else {
+				$where .= " and ";
+			}
+			
+			$where .= "concat(name, cluster, address) like '%".$keys[$i]."%'";
+
+		}
+
 		$sql = "
-				select a.id, a.name, a.cluster
-					, a.address, a.stock_qty, a.stock_price
+				select id, name, cluster
+					, address, stock_qty, stock_price
 				from (
-						select u.id, u.name, c.name cluster
-							, u.address, u.stock_qty
-							, (u.stock_qty * 25000) stock_price
-						from users u
-							, clusters c
-						where c.id = u.cluster
-					) a
-				where a.id like '%$key%' or a.name like '%$key%' or a.cluster like '%$key%'
-				order by a.name
+				    select u.id, u.name, c.name cluster
+				      , concat(u.address1, ' ', u.address2) address
+				      , u.stock_qty, (u.stock_qty * 25000) stock_price
+				    from users u
+				      , clusters c
+				    where c.id = u.cluster
+				  ) a
+				$where
+				order by name
 				limit 100
 			";
 		write_log($this, __METHOD__, "sql : $sql");

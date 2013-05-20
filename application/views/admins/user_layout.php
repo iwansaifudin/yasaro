@@ -8,14 +8,13 @@
 			
 			jQuery("#list_1").jqGrid({
 				datatype: 'local'
-				, colNames:['ID','Nama','Login','Kelompok','Alamat']
+				, colNames:['ID','Nama','Kelompok','Alamat','']
 				, colModel:[
-					{name:'id', index:'id', width:20, align:'center', sorttype:'int', formatter:'text'} 
-					, {name:'name', index:'name', width:75, align:'left', sorttype:'text'}
-					, {name:'code', index:'code', width:60, align:'left', sorttype:'text'}
-					, {name:'cluster', index:'cluster', width:75, align:'left', sorttype:'text'}
-					, {name:'address', index:'address', width:125, align:'left', sorttype:'text'}
-				]
+					{name:'id', index:'id', width:40, align:'center', sorttype:'int', formatter:'text', fixed:true} 
+					, {name:'name', index:'name', width:120, align:'left', sorttype:'text', fixed:true}
+					, {name:'cluster', index:'cluster', width:120, align:'left', sorttype:'text', fixed:true}
+					, {name:'address', index:'address', width:500, align:'left', sorttype:'text', fixed:true}
+					, {name:'blank', index:'blank'}				]
 				, rowNum: 100
 				, sortname: 'name'
 				, sortorder: 'asc'
@@ -47,7 +46,6 @@
 							, {
 								id: data[i]['id']
 								, name: data[i]['name']
-								, code: data[i]['code']
 								, cluster: data[i]['cluster']
 								, address: data[i]['address']
 							}
@@ -74,12 +72,13 @@
 			
 			jQuery("#list_2").jqGrid({
 				datatype: 'local'
-				, colNames:['ID','Nama','Status Keluarga','Saham']
+				, colNames:['ID','Nama','Status Keluarga','Saham','']
 				, colModel:[
-					{name:'id', index:'id', width:20, align:'center', sorttype:'int', formatter:'text'} 
-					, {name:'name', index:'name', width:75, align:'left', sorttype:'text'}
-					, {name:'family', index:'family', width:50, align:'left', sorttype:'text'}
-					, {name:'stock_qty', index:'stock_qty', width:30, align:'right', sorttype:'text'}
+					{name:'id', index:'id', width:40, align:'center', sorttype:'int', formatter:'text', fixed:true} 
+					, {name:'name', index:'name', width:120, align:'left', sorttype:'text', fixed:true}
+					, {name:'family', index:'family', width:100, align:'left', sorttype:'text', fixed:true}
+					, {name:'stock_qty', index:'stock_qty', width:50, align:'right', sorttype:'text', fixed:true}
+					, {name:'blank', index:'blank'}
 				]
 				, rowNum: 100
 				, sortname: 'name'
@@ -169,17 +168,17 @@
 						}
 						, onClose: function(dateText, inst) { 
 							
-							$('#age').html(get_age($("#birth_date").val()));
+							var birth_date = $("#birth_date").val();
+							if(birth_date == '') {
+								$('#age').html('0');
+							} else {
+								$('#age').html(get_age($("#birth_date").val()));
+							}
 		
 						}
 					});
 					
-					if(birth_date == '') {
-						var today = new Date();
-						$("#birth_date").val(get_date(today));
-					} else {
-						$("#birth_date").val(birth_date);
-					}
+					$("#birth_date").val(birth_date);
 					
 				}
 			);
@@ -234,23 +233,22 @@
 			parm['birth_place'] = $('#birth_place').val();
 			parm['birth_date'] = $('#birth_date').val();
 			parm['gender'] = $('select#gender option:selected').val();
-			parm['address'] = $('#address').val();
-			parm['rt'] = $('#rt').val();
-			parm['rw'] = $('#rw').val();
-			parm['village'] = $('#village').val();
-			parm['sub_district'] = $('#sub_district').val();
-			parm['municipality'] = $('#municipality').val();
+			parm['address1'] = $('#address1').val();
+			parm['address2'] = $('#address2').val();
 			parm['telephone'] = $('#telephone').val();
+			parm['handphone'] = $('#handphone').val();
 			parm['patriarch'] = $('#patriarch_id').val();
 			parm['family'] = $('select#family option:selected').val();
 			parm['cluster'] = $('select#cluster option:selected').val();
+			parm['nationality'] = $('select#nationality option:selected').val();
+			parm['information'] = $('#information').val();
 			
 			if(parm['name'] == '') {
-				alert('Mohon diisi terlebih dahulu nama jamaah!');
+				alert('Mohon diisi terlebih dahulu nama anggota!');
 				return false;
 			}
 			
-			if(!confirm('Anda yakin ingin menyimpan data jamaah "'+parm['name']+'"?')) return false;
+			if(!confirm('Anda yakin ingin menyimpan data anggota "'+parm['name']+'"?')) return false;
 		
 			$.ajaxSetup({ cache: false });
 			$.getJSON(
@@ -261,7 +259,7 @@
 					var id = data['id'];
 					var result = data['result'];
 					var result_msg = (result == 1?'berhasil':'gagal');
-					alert('Data jamaah atas nama "' + parm['name'] + '" ' + result_msg + ' disimpan!');
+					alert('Data anggota atas nama "' + parm['name'] + '" ' + result_msg + ' disimpan!');
 		
 					get_list_1($('#key').val()); // load list user data
 					get_list_2($('#id_act').val());
@@ -309,12 +307,12 @@
 
 			if(id == '' || id == null || id == 'undefined') {
 				
-				alert('Silahkan dipilih terlebih dahulu data jamaah!');
+				alert('Silahkan dipilih terlebih dahulu data anggota!');
 				return false;
 				
 			}
 			
-			if(!confirm('Anda yakin ingin mereset password jamaah "' + $('#name').val() + '"!')) return false;
+			if(!confirm('Anda yakin ingin mereset password anggota "' + $('#name').val() + '"!')) return false;
 			
 			// update data
 			$('#loading').html("<img src='libs/css/jquery/layout/images/loading.gif' height='15' />");

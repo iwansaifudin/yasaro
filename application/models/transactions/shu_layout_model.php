@@ -5,11 +5,25 @@ class Shu_layout_model extends CI_Model {
 			
 		$key = (isset($_REQUEST['key'])?$_REQUEST['key']:'null');
 		write_log($this, __METHOD__, "key : $key");
+		
+		$where = "";
+		$keys = explode(" ", trim($key));
+		for($i = 0;  $i < sizeof($keys); $i++) {
+			
+			if($i == 0) {
+				$where = " where ";
+			} else {
+				$where .= " and ";
+			}
+			
+			$where .= "concat(name, cluster, period) like '%".$keys[$i]."%'";
+
+		}
 
 		$sql = "
-				select a.id, a.name, a.cluster, a.period
-			      , a.stock_qty, a.stock_received, a.stock_remain
-			      , a.shu_qty, a.shu_received, a.shu_remain
+				select id, name, cluster, period
+			      , stock_qty, stock_received, stock_remain
+			      , shu_qty, shu_received, shu_remain
 				from (
 						select u.id, u.name, c.name cluster, a.period
 					      , a.stock_qty, a.stock_received, a.stock_remain
@@ -30,8 +44,8 @@ class Shu_layout_model extends CI_Model {
 						  , clusters c
 						where c.id = u.cluster
 					) a
-				where a.id like '%$key%' or a.name like '%$key%' or a.cluster like '%$key%'
-				order by a.name
+				$where
+				order by name
 				limit 100
 			";
 		write_log($this, __METHOD__, "sql : $sql");

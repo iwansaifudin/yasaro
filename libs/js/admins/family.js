@@ -16,12 +16,13 @@ var list_family = function () {
 		url: 'admins/family'
 		, datatype: "json"
 		, height: 250
-		, colNames:['Aksi', 'ID', 'Nama', 'Status']
+		, colNames:['Aksi', 'ID', 'Nama', 'Status', 'Kepala Keluarga']
 		, colModel:[
 			{name:'myac', width:55, fixed:true, sortable:false, resize:false, search:false, formatter:'actions', formatoptions:{keys:true}}
 			, {name:'id', index:'id', width:50}
-			, {name:'name', index:'name', width:350, editable: true}
+			, {name:'name', index:'name', width:250, editable: true}
 			, {name:'status', index:'status', width:90, align:'center', editable: true, edittype:"select", formatter:"select", editoptions:{value:"1:Aktif;0:Tidak Aktif", defaultValue: "1"}}
+			, {name:'is_parent', index:'is_parent', width:110, align:'center', editable: true, edittype:"select", formatter:"select", editoptions:{value:"1:Ya;0:Tidak", defaultValue: "0"}}
 		]
 		, rowNum: 25
 		, mtype: "POST"
@@ -59,6 +60,7 @@ var list_family = function () {
 	});
 
 	setSearchSelect('list_3', 'status', 'All:Semua;1:Aktif;0:Tidak Aktif');
+	setSearchSelect('list_3', 'is_parent', 'All:Semua;1:Ya;0:Tidak');
 
 	jQuery("#list_3").jqGrid('filterToolbar',{stringResult:true, searchOnEnter:true, defaultSearch:"cn"});
 	jQuery("#list_3")[0].toggleToolbar();

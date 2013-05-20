@@ -25,7 +25,7 @@ function user() {
 							centerNorthLayout.show('east');
 							centerCenterLayout.show('north');
 						
-							$('#footer_information').html('Pendaftaran Jamaah');
+							$('#footer_information').html('Pendaftaran Anggota');
 				
 						} 
 					);

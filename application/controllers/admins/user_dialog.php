@@ -17,7 +17,9 @@ class User_dialog extends CI_Controller {
 		$sql = "
 				select u.id, u.name, u.cluster
 				from users  u
-				where u.is_active = 1 
+				  , families f
+				where u.is_active = 1
+				  and f.id = u.family and f.is_parent = 1
 			";
 		$list = $this->list_model->get_list($sql, 100);
 		write_log($this, __METHOD__, "sql : $sql | records : ".$list['records']." | page : ".$list['page']." | total : ".$list['total']);
