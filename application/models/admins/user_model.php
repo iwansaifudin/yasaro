@@ -72,7 +72,7 @@ class User_model extends CI_Model {
 		$status = (isset($_REQUEST['status'])?$_REQUEST['status']:null);
 		$birth_place = (isset($_REQUEST['birth_place'])?$_REQUEST['birth_place']:null);
 		$birth_date = (isset($_REQUEST['birth_date'])?$_REQUEST['birth_date']:null);
-		$birth_date = (($birth_date==null||$birth_date='')?"str_to_date(null, '%e %b %Y')":"str_to_date('$birth_date', '%e %b %Y')");
+		$birth_date = (($birth_date==null||$birth_date=='')?"str_to_date(null, '%e %b %Y')":"str_to_date('$birth_date', '%e %b %Y')");
 		$gender = (isset($_REQUEST['gender'])?$_REQUEST['gender']:null);
 		$address1 = (isset($_REQUEST['address1'])?$_REQUEST['address1']:null);
 		$address2 = (isset($_REQUEST['address2'])?$_REQUEST['address2']:null);
