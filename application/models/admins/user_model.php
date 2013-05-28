@@ -40,7 +40,7 @@ class User_model extends CI_Model {
 		
 		$sql = "
 				select u.id, u.code, u.name
-				  , u.birth_place, date_format(u.birth_date, '%e %b %Y') birth_date
+				  , u.birth_place, date_format(u.birth_date, '%d %b %Y') birth_date
 				  , date_format(from_days(to_days(now()) - to_days(u.birth_date)), '%Y') + 0 age, u.gender
 				  , u.address1, u.address2, u.telephone, u.handphone
 				  , u.patriarch patriarch_id, (select name from users where id = u.patriarch) patriarch_name
