@@ -48,34 +48,37 @@ class User_layout_model extends CI_Model {
 
 		$sql = "
 				select a.id, a.name
-				  , a.family, a.stock_qty
+				  , a.family_name family, a.stock_qty
 				from (
-				    select u2.id, u2.name
-				      , f.name family, u2.stock_qty
-				    from users u1
-				      , users u2
-				      , families f
-				    where u1.id = '$id'
-				      and u2.id = u1.patriarch
-				      and f.id = u2.family
-				    union
-				    select u2.id, u2.name
-				      , f.name family, u2.stock_qty
-				    from users u1
-				      , users u2
-				      , families f
-				    where u1.id = '$id'
-				      and u2.patriarch = u1.patriarch
-				      and f.id = u2.family
-				    union
-				    select u.id, u.name
-				      , f.name family, u.stock_qty
-				    from users  u
-				      , families f
-				    where u.patriarch = '$id'
-				      and f.id = u.family
+					select u2.id, u2.name, u2.birth_date
+					  , u2.family family_id, f.name family_name
+					  , u2.stock_qty
+					from users u1
+					  , users u2
+					  , families f
+					where u1.id = '$id'
+					  and u2.id = u1.patriarch
+					  and f.id = u2.family
+					union
+					select u2.id, u2.name, u2.birth_date
+					  , u2.family family_id, f.name family_name
+					  , u2.stock_qty
+					from users u1
+					  , users u2
+					  , families f
+					where u1.id = '$id'
+					  and u2.patriarch = u1.patriarch
+					  and f.id = u2.family
+					union
+					select u.id, u.name, u.birth_date
+					  , u.family family_id, f.name family_name
+					  , u.stock_qty
+					from users  u
+					  , families f
+					where u.patriarch = '$id'
+					  and f.id = u.family
 				  ) a
-				order by a.name
+				order by a.family_id, a.birth_date
 				limit 100
 			";
 		write_log($this, __METHOD__, "sql : $sql");

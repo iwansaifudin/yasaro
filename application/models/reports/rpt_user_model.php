@@ -40,6 +40,7 @@ class Rpt_user_model extends CI_Model {
 				  and u2.id = u1.patriarch
 				  and f.id = u1.family
 				  and c.id = u1.cluster
+				order by c.id, u2.name, f.id, u1.birth_date
   			";
 		write_log($this, __METHOD__, "sql : $sql");
 		$query = $this->db->query($sql);
