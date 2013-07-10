@@ -81,40 +81,106 @@ class Rpt_user_model extends CI_Model {
 		// header & parameter
 		$objPHPExcel->setActiveSheetIndex(0)
 		            ->setCellValue('A1', 'Laporan Pemegang Saham')
-		            ->setCellValue('A3', 'Kelompok')->setCellValue('B3', ": $cluster_name")
-		            ->setCellValue('A4', 'Pemegang Saham')->setCellValue('B4', ": $user_name");
+		            ->setCellValue('A3', 'Kelompok')->setCellValue('C3', ": $cluster_name")
+		            ->setCellValue('A4', 'Pemegang Saham')->setCellValue('C4', ": $user_name");
+		$objPHPExcel->getActiveSheet()->getStyle("A1")->getFont()->setBold(true);
+		$objPHPExcel->getActiveSheet()->getStyle("A3")->getFont()->setBold(true);
+		$objPHPExcel->getActiveSheet()->getStyle("A4")->getFont()->setBold(true);
 
-		// table header 
-		$cols = array(
+		// declare column 
+		$col_header = array(
 			'ID', 'Nama', 'Tempat Lahir', 'Tanggal Lahir', 'Jenis Kelamin', 'Alamat', 'Telepon', 'Handphone'
 			, 'Kepala Keluarga', 'Status dlm Keluarga', 'Kelompok', 'Kewarganegaraan'
 			, 'Jml Saham', 'Total Harga', 'Daftar Saham', 'Status Keanggotaan', 'Keterangan');
-		$cols_flag = array(
+		$col_body = array(
+			'', '', '', '', '', '', 'text', 'text'
+			, '', '', '', ''
+			, '', '', '', '', '');
+		$col_footer = array(
 			'Total', 'count', '', '', '', '', '', ''
 			, '', '', '', ''
 			, 'sum', 'sum', '', '', '');
+		
+		// declare variable
 		$total = array();
 		$col = 'A';
 		$row = 6;
-		foreach ($cols as $i => $value) {
+		
+		// set header column
+		foreach ($col_header as $i => $value) {
 			$chr = chr(ord($col) + $i);
 			$objPHPExcel->setActiveSheetIndex(0)->setCellValue($chr.$row, $value);
+			$objPHPExcel->getActiveSheet()->getStyle($chr.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);			$objPHPExcel->getActiveSheet()->getStyle($chr.$row)->getFont()->setBold(true);
+			$objPHPExcel->getActiveSheet()->getStyle($chr.$row)->getFill()->applyFromArray(
+			    array(
+			        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
+			        // 'startcolor' => array('rgb' => 'c0c0c0'),			        'startcolor' => array('rgb' => '969696'),
+			    )
+			);
 			$total[$i] = 0;
 		}
 
-		// get weekly report data
+		// set body column
+		$patriarch_temp = "";
+		$patriarch_flag = false;
 		$data = $this->get_rpt_user();
 		for($j = 0; $j < sizeof($data); $j++) {
 				
+			// declare parent & status flag
+			$name = $data[$j]["name"];
+			$patriarch = $data[$j]["patriarch"];
+			$status = $data[$j]["status"];
+			if($name == $patriarch) {
+				$is_parent = true;
+			} else {
+				$is_parent = false;
+			}
+			
+			// set family block flag
+			if($patriarch_temp <> $patriarch) {
+				if($patriarch_flag) {
+					$patriarch_flag = false;
+				} else {
+					$patriarch_flag = true;
+				}
+				$patriarch_temp = $patriarch;
+			}
+			
+			// set body value
 			$i = 0;
 			foreach ($data[$j] as $value) {
 				
 				$chr = chr(ord($col) + $i);
-				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($chr.($row + $j + 1), $value);
+				if($col_body[$i] == "text") {
+					$objPHPExcel->getActiveSheet()->setCellValueExplicit($chr.($row + $j + 1), $value, PHPExcel_Cell_DataType::TYPE_STRING);
+				} else {
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($chr.($row + $j + 1), $value);
+				}
 				
-				if($cols_flag[$i] == 'count') {
+				// set different background color for different family
+				if($patriarch_flag) {
+					$objPHPExcel->getActiveSheet()->getStyle($chr.($row + $j + 1))->getFill()->applyFromArray(
+					    array(
+					        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
+					        // 'startcolor' => array('rgb' => 'e9e9e9'),					        'startcolor' => array('rgb' => 'c0c0c0'),
+					    )
+					);
+				}
+				
+				// set bold font for parent
+				if($is_parent) {
+					$objPHPExcel->getActiveSheet()->getStyle($chr.($row + $j + 1))->getFont()->setBold(true);
+				}
+				
+				// set red color for user is not active
+				if($status == "Tidak Aktif") {
+					$objPHPExcel->getActiveSheet()->getStyle($chr.($row + $j + 1))->getFont()->getColor()->applyFromArray(array("rgb" => "ff0000"));
+				}
+				
+				// acculumate column for count & sum
+				if($col_footer[$i] == 'count') {
 					$total[$i] ++;
-				} else if($cols_flag[$i] == 'sum') {
+				} else if($col_footer[$i] == 'sum') {
 					$total[$i] += $value;
 				}
 
@@ -123,10 +189,17 @@ class Rpt_user_model extends CI_Model {
 		
 		}
 		
-		// total
-		foreach ($cols_flag as $i => $value) {
+		// set footer column
+		foreach ($col_footer as $i => $value) {
 			$chr = chr(ord($col) + $i);
 			$objPHPExcel->setActiveSheetIndex(0)->setCellValue($chr.($row + sizeof($data) + 1), ($value=='count'||$value=='sum'?$total[$i]:$value));
+			$objPHPExcel->getActiveSheet()->getStyle($chr.($row + sizeof($data) + 1))->getFont()->setBold(true);
+			$objPHPExcel->getActiveSheet()->getStyle($chr.($row + sizeof($data) + 1))->getFill()->applyFromArray(
+			    array(
+			        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
+			        // 'startcolor' => array('rgb' => 'c0c0c0'),			        'startcolor' => array('rgb' => '969696'),
+			    )
+			);
 		}
 	            
 		// Rename sheet
